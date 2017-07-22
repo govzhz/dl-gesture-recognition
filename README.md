@@ -12,7 +12,7 @@ Model has been established！
 - Build model
 
   ```
-  $ python Train.py
+  $ python build_net.py
   ```
 
 
