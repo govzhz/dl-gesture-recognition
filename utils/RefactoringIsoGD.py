@@ -1,23 +1,25 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-'''
-@author: zz
-@contact: zhzcoder@gmail.com
-@time: 17-11-11 下午8:31
-@desc:
-    创建可供训练的数据集
+"""
+@Author: zz
+@Date  : 2017/11/11
+@Desc  :
+    对IsoGD源数据集二次处理,用于生成可供训练的数据集
         1. createAll()：创建所有数据
         2. createTrainList()：创建训练集列表(分为depth和rgb)
         3. createValidList()：创建验证集列表(分为depth和rgb)
         4. createTrainDateSet(): 创建训练集
         5. createValidDateSet(): 创建验证集
+    其中，classifyStartNum, classifyEndNum参数用于提取分类在 classifyStartNum <= classify < classifyEndNum
+    范围内的数据作为训练集，默认提取全部分类
 
     Sample:
       > from IsoGDUtil import IsoGD
       > isoGD = IsoGD('/home/zz/dataset_in', '/home/zz/dataset_out')  # 参数分别为输入数据集的根目录和输出数据集的根目录
-      > isoGD.createAll()
-'''
+      > isoGD.createAll()  # 提取全部构建数据集
+      > isoGD.createAll(classifyStartNum=1, classifyEndNum=21)  # 提取分类为1-20构建数据集
+"""
 
 import cv2
 import os
@@ -76,37 +78,38 @@ class IsoGD(object):
         self.inRootDir = inRootDir
         self.outRootDir = outRootDir
 
-    def createAll(self):
+
+    def createAll(self, classifyStartNum=None, classifyEndNum=None):
         """创建所有所需的文件
         """
-        self._createSpecificList('train')
-        self._createSpecificList('valid')
-        self._createSpecificDataset('train')
-        self._createSpecificDataset('valid')
+        self._createSpecificList('train', classifyStartNum, classifyEndNum)
+        self._createSpecificList('valid', classifyStartNum, classifyEndNum)
+        self._createSpecificDataset('train', classifyStartNum, classifyEndNum)
+        self._createSpecificDataset('valid', classifyStartNum, classifyEndNum)
 
-    def createTrainList(self):
+    def createTrainList(self, classifyStartNum=None, classifyEndNum=None):
         """创建文件
          - train_rgb_list.txt
          - train_depth_list.txt
         """
-        self._createSpecificList('train')
+        self._createSpecificList('train', classifyStartNum, classifyEndNum)
 
-    def createValidList(self):
+    def createValidList(self, classifyStartNum=None, classifyEndNum=None):
         """创建文件
          - valid_rgb_list.txt
          - valid_depth_list.txt
         """
-        self._createSpecificList('train')
+        self._createSpecificList('train', classifyStartNum, classifyEndNum)
 
-    def createTrainDateSet(self):
+    def createTrainDateSet(self, classifyStartNum=None, classifyEndNum=None):
         """构建训练集"""
-        self._createSpecificDataset('train')
+        self._createSpecificDataset('train', classifyStartNum, classifyEndNum)
 
-    def createValidDateSet(self):
+    def createValidDateSet(self, classifyStartNum=None, classifyEndNum=None):
         """构建验证集"""
-        self._createSpecificDataset('valid')
+        self._createSpecificDataset('valid', classifyStartNum, classifyEndNum)
 
-    def _createSpecificList(self, dataSetType):
+    def _createSpecificList(self, dataSetType, classifyStartNum=None, classifyEndNum=None):
         print('create list: %s [%s]' % (dataSetType, self.outRootDir))
         rgbListFileName = os.path.join(self.outRootDir, dataSetType + '_rgb_list.txt')
         depthListFileName = os.path.join(self.outRootDir, dataSetType + '_depth_list.txt')
@@ -129,16 +132,25 @@ class IsoGD(object):
                     depthVideoDir = os.path.join(self.inRootDir, tempList[1])
                     classify = int(tempList[2]) - 1  # start with zero
 
+                    if classifyStartNum is not None and classifyEndNum is not None:
+                        assert classifyEndNum > classifyStartNum
+
+                        if not classifyStartNum <= classify < classifyEndNum:
+                            currentCount += 2
+                            if currentCount % 200 == 0:
+                                print("    process: %s / %s" % (currentCount, allCount))
+                            continue
+
                     outRgbVideoDir, rgbcount = self._getVideoInfo(dataSetType, rgbVideoDir, 'rgb')
                     outDepthVideoDir, depthcount = self._getVideoInfo(dataSetType, depthVideoDir, 'depth')
 
-                    frgb.write(outRgbVideoDir + ' ' + str(rgbcount) + ' ' + str(classify))
+                    frgb.write(outRgbVideoDir + ' ' + str(rgbcount) + ' ' + str(classify) + '\n')
 
                     currentCount += 1
                     if currentCount % 200 == 0:
                         print("    process: %s / %s" % (currentCount, allCount))
 
-                    fdepth.write(outDepthVideoDir + ' ' + str(depthcount) + ' ' + str(classify))
+                    fdepth.write(outDepthVideoDir + ' ' + str(depthcount) + ' ' + str(classify) + '\n')
 
                     currentCount += 1
                     if currentCount % 200 == 0:
@@ -146,7 +158,7 @@ class IsoGD(object):
 
                 print('done\n')
 
-    def _createSpecificDataset(self, dataSetType):
+    def _createSpecificDataset(self, dataSetType, classifyStartNum=None, classifyEndNum=None):
         print('create dataset: %s [%s]' % (dataSetType, os.path.join(self.outRootDir, dataSetType)))
         with open(os.path.join(self.inRootDir, dataSetType + '_list.txt'), 'r') as fread:
             f_lines = fread.readlines()
@@ -155,6 +167,17 @@ class IsoGD(object):
             currentCount = 0
             for line in f_lines:
                 tempList = line.split(' ')
+
+                if classifyStartNum is not None and classifyEndNum is not None:
+                    assert len(tempList) == 3, 'current file not support, can not find out classify'
+                    assert classifyEndNum > classifyStartNum
+
+                    classify = int(tempList[2]) - 1  # start with zero
+                    if not classifyStartNum <= classify < classifyEndNum:
+                        currentCount += 2
+                        if currentCount % 200 == 0:
+                            print("    process: %s / %s" % (currentCount, allCount))
+                        continue
 
                 inRgbVideoDir = os.path.join(self.inRootDir, tempList[0])
                 inDepthVideoDir = os.path.join(self.inRootDir, tempList[1])
@@ -211,6 +234,7 @@ class IsoGD(object):
             return False
         return True
 
+
 if __name__ == '__main__':
     isoGD = IsoGD('/home/zz/dataset_in', '/home/zz/dataset_out')
-    isoGD.createAll()
+    isoGD.createAll(classifyStartNum=1, classifyEndNum=21)
