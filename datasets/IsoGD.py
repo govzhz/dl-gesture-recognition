@@ -44,7 +44,8 @@ class IsoGD(data.Dataset):
         seleted_frames = np.zeros(self.output_frames_cnt)
         scale = (video_frame_cnt - 1) * 1.0 / (self.output_frames_cnt - 1)
         if int(math.floor(scale)) == 0:
-            pass
+            seleted_frames[:video_frame_cnt] = np.arange(0, video_frame_cnt)
+            seleted_frames[video_frame_cnt:] = video_frame_cnt - 1
         else:
             seleted_frames[::] = np.floor(scale * np.arange(0, self.output_frames_cnt))
 
@@ -56,11 +57,11 @@ class IsoGD(data.Dataset):
         if self.transform is None:
             default_width, default_height = sample_img.size
             # res_images = np.empty((self.output_frames_cnt, default_height, default_width, 3), dtype=np.float32)
-            res_images = torch.IntTensor(self.output_frames_cnt, default_height, default_width, 3).zero_()
+            res_images = torch.Tensor(self.output_frames_cnt, default_height, default_width, 3).zero_()
         else:
             transform_img = self.transform(sample_img)  # torch.FloatTensor
             _, transform_height, transform_width = transform_img.size()
-            res_images = torch.IntTensor(self.output_frames_cnt, transform_height, transform_width, 3).zero_()
+            res_images = torch.Tensor(self.output_frames_cnt, transform_height, transform_width, 3).zero_()
 
         # 图像预处理并合并所有图像
         # 推荐处理：
