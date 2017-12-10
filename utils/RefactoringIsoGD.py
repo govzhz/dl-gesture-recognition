@@ -15,18 +15,17 @@
     范围内的数据作为训练集，默认提取全部分类
 
     Sample:
-      > from IsoGDUtil import IsoGD
-      > isoGD = IsoGD('/home/zz/dataset_in', '/home/zz/dataset_out')  # 参数分别为输入数据集的根目录和输出数据集的根目录
+      > from utils.RefactoringSkig import IsoGD
+      > isoGD = IsoGD('/home/zz/isogd_in', '/home/zz/isogd_out')  # 参数分别为输入数据集的根目录和输出数据集的根目录
       > isoGD.createAll()  # 提取全部构建数据集
       > isoGD.createAll(classifyStartNum=1, classifyEndNum=21)  # 提取分类为1-20构建数据集
 """
 
-import cv2
 import os
-import shutil
+from utils.BaseRefactoringDataset import BaseDataSet, ParseVideoException
 
 
-class IsoGD(object):
+class IsoGD(BaseDataSet):
     def __init__(self, inRootDir, outRootDir):
         """
         IsoGD输入数据集目录树应如下：
@@ -67,6 +66,8 @@ class IsoGD(object):
             1. IsoGD数据集的test分类给出的list没有视频分类，所以对模型的训练和验证没有帮助，所以不需要解析该分类
             2. IsoGD数据集的valid分类同样没有视频分类，但是目前有一份包含分类的list，在此list的基础上修改得到
         """
+        BaseDataSet.__init__(self, inRootDir, outRootDir)
+
         assert os.path.exists(os.path.join(inRootDir, 'train')), "please make sure dir 'train' in %s" % inRootDir
         assert os.path.exists(os.path.join(inRootDir, 'valid')), "please make sure dir 'valid' in %s" % inRootDir
 
@@ -74,10 +75,6 @@ class IsoGD(object):
             os.path.join(inRootDir, 'train_list.txt')), "please make sure file 'train_list.txt' in %s" % inRootDir
         assert os.path.exists(
             os.path.join(inRootDir, 'valid_list.txt')), "please make sure file 'valid_list.txt' in %s" % inRootDir
-
-        self.inRootDir = inRootDir
-        self.outRootDir = outRootDir
-
 
     def createAll(self, classifyStartNum=None, classifyEndNum=None):
         """创建所有所需的文件
@@ -111,6 +108,7 @@ class IsoGD(object):
 
     def _createSpecificList(self, dataSetType, classifyStartNum=None, classifyEndNum=None):
         print('create list: %s [%s]' % (dataSetType, self.outRootDir))
+
         rgbListFileName = os.path.join(self.outRootDir, dataSetType + '_rgb_list.txt')
         depthListFileName = os.path.join(self.outRootDir, dataSetType + '_depth_list.txt')
 
@@ -128,9 +126,9 @@ class IsoGD(object):
 
                     assert len(tempList) == 3, 'current file not support, can not find out classify'
 
-                    rgbVideoDir = os.path.join(self.inRootDir, tempList[0])
-                    depthVideoDir = os.path.join(self.inRootDir, tempList[1])
-                    classify = int(tempList[2]) - 1  # start with zero
+                    inRgbVideoPath = os.path.join(self.inRootDir, tempList[0])
+                    inDepthVideoPath = os.path.join(self.inRootDir, tempList[1])
+                    classify = int(tempList[2])
 
                     if classifyStartNum is not None and classifyEndNum is not None:
                         assert classifyEndNum > classifyStartNum
@@ -140,9 +138,10 @@ class IsoGD(object):
                             if currentCount % 200 == 0:
                                 print("    process: %s / %s" % (currentCount, allCount))
                             continue
+                    classify -= 1  # start with zero
 
-                    outRgbVideoDir, rgbcount = self._getVideoInfo(dataSetType, rgbVideoDir, 'rgb')
-                    outDepthVideoDir, depthcount = self._getVideoInfo(dataSetType, depthVideoDir, 'depth')
+                    outRgbVideoDir, rgbcount = self._getVideoInfo(dataSetType, inRgbVideoPath, 'rgb')
+                    outDepthVideoDir, depthcount = self._getVideoInfo(dataSetType, inDepthVideoPath, 'depth')
 
                     frgb.write(outRgbVideoDir + ' ' + str(rgbcount) + ' ' + str(classify) + '\n')
 
@@ -160,6 +159,7 @@ class IsoGD(object):
 
     def _createSpecificDataset(self, dataSetType, classifyStartNum=None, classifyEndNum=None):
         print('create dataset: %s [%s]' % (dataSetType, os.path.join(self.outRootDir, dataSetType)))
+
         with open(os.path.join(self.inRootDir, dataSetType + '_list.txt'), 'r') as fread:
             f_lines = fread.readlines()
             allCount = len(f_lines) * 2
@@ -172,69 +172,44 @@ class IsoGD(object):
                     assert len(tempList) == 3, 'current file not support, can not find out classify'
                     assert classifyEndNum > classifyStartNum
 
-                    classify = int(tempList[2]) - 1  # start with zero
+                    classify = int(tempList[2])
                     if not classifyStartNum <= classify < classifyEndNum:
                         currentCount += 2
                         if currentCount % 200 == 0:
                             print("    process: %s / %s" % (currentCount, allCount))
                         continue
+                    classify -= 1  # start with zero
 
-                inRgbVideoDir = os.path.join(self.inRootDir, tempList[0])
-                inDepthVideoDir = os.path.join(self.inRootDir, tempList[1])
+                inRgbVideoPath = os.path.join(self.inRootDir, tempList[0])
+                inDepthVideoPath = os.path.join(self.inRootDir, tempList[1])
 
-                outRgbVideoDir = self._getVideoInfo(dataSetType, inRgbVideoDir, 'rgb', onlyOutDir=True)
-                outDepthVideoDir = self._getVideoInfo(dataSetType, inDepthVideoDir, 'depth', onlyOutDir=True)
+                outRgbVideoDir = self._getVideoInfo(dataSetType, inRgbVideoPath, 'rgb', onlyOutDir=True)
+                outDepthVideoDir = self._getVideoInfo(dataSetType, inDepthVideoPath, 'depth', onlyOutDir=True)
 
                 if not os.path.exists(outRgbVideoDir):
                     os.makedirs(outRgbVideoDir)
                 if not os.path.exists(outDepthVideoDir):
                     os.makedirs(outDepthVideoDir)
 
-                if self._toFrames(inRgbVideoDir, outRgbVideoDir):
+                try:
+                    self._toFrames(inRgbVideoPath, outRgbVideoDir)
                     currentCount += 1
                     if currentCount % 50 == 0:
                         print("    process: %s / %s" % (currentCount, allCount))
-                if self._toFrames(inDepthVideoDir, outDepthVideoDir):
+                except ParseVideoException as e:
+                    print(e)
+
+                try:
+                    self._toFrames(inDepthVideoPath, outDepthVideoDir)
                     currentCount += 1
                     if currentCount % 50 == 0:
                         print("    process: %s / %s" % (currentCount, allCount))
+                except ParseVideoException as e:
+                    print(e)
 
             print('done\n')
 
-    def _getVideoInfo(self, dataSetType, videoDir, videoType, onlyOutDir=False):
-        outVideoDir = os.path.join(os.path.join(os.path.join(self.outRootDir, dataSetType),
-                                                videoType), os.path.basename(videoDir).split('.')[0])
-        if not onlyOutDir:
-            cap = cv2.VideoCapture(videoDir)
-            if not cap.isOpened():
-                raise Exception('Could not open the video')
-            count = self._countVideoFrames(cap)
-            return outVideoDir, count
-        return outVideoDir
-
-    def _countVideoFrames(self, cap):
-        return int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-
-    def _toFrames(self, inVideoDir, outVideoDir):
-        cap = cv2.VideoCapture(inVideoDir)
-        if not cap.isOpened():
-            raise Exception('Could not open the video')
-
-        count = 0
-        success = True
-        while success:
-            success, image = cap.read()
-            if success:
-                cv2.imwrite(os.path.join(outVideoDir, "%06d.jpg" % count), image)
-                count += 1
-
-        if count != self._countVideoFrames(cap):
-            shutil.rmtree(outVideoDir)
-            print('[To frame failed] %s' % outVideoDir)
-            return False
-        return True
-
 
 if __name__ == '__main__':
-    isoGD = IsoGD('/home/zz/dataset_in', '/home/zz/dataset_out')
-    isoGD.createAll(classifyStartNum=1, classifyEndNum=21)
+    isoGD = IsoGD('/home/zdh/zz/dataset/IsoGD_phase_1/IsoGD_phase_1', '/home/zdh/zz/workspace/qwe')
+    isoGD.createAll(classifyStartNum=1, classifyEndNum=11)
