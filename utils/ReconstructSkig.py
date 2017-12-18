@@ -21,7 +21,7 @@ import os
 from collections import defaultdict
 import random
 import math
-from utils.BaseRefactoringDataset import BaseDataSet, ParseVideoException
+from utils.BaseReconstructDataset import BaseDataSet, ParseVideoException
 
 
 class Skig(BaseDataSet):

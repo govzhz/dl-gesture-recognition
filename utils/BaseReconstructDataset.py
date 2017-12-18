@@ -80,6 +80,7 @@ class BaseDataSet(object):
         """
         outVideoDir = os.path.join(os.path.join(os.path.join(self.outRootDir, dataSetType),
                                                 videoType), os.path.basename(invideoPath).split('.')[0])
+
         if not onlyOutDir:
             cap = cv2.VideoCapture(invideoPath)
             if not cap.isOpened():

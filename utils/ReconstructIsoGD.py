@@ -22,7 +22,7 @@
 """
 
 import os
-from utils.BaseRefactoringDataset import BaseDataSet, ParseVideoException
+from utils.BaseReconstructDataset import BaseDataSet, ParseVideoException
 
 
 class IsoGD(BaseDataSet):
