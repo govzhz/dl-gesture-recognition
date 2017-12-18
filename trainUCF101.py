@@ -57,7 +57,7 @@ train_data = GestureDataSet(root='/home/zdh/zz/workspace/refactorUCF101', train=
 test_data = GestureDataSet(root='/home/zdh/zz/workspace/refactorUCF101', train=False, output_frames_cnt=16, transform=transform)
 
 train_loader = data.DataLoader(dataset=train_data, batch_size=8, shuffle=True, num_workers=4)
-test_loader = data.DataLoader(dataset=test_data, batch_size=8, shuffle=True, num_workers=4)
+test_loader = data.DataLoader(dataset=test_data, batch_size=2, shuffle=True, num_workers=4)
 
 net = C3dConvLstmNet()
 if torch.cuda.is_available():
