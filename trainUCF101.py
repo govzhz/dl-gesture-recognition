@@ -18,6 +18,7 @@ from nets.C3dConvLstm import C3dConvLstmNet
 import torch.optim as optim
 from torch.autograd import Variable
 import torch.nn as nn
+from tensorboardX import SummaryWriter
 
 
 def weights_init(m):
@@ -46,7 +47,7 @@ def weights_init(m):
 lr = 0.003
 epochs = 50
 
-
+writer = SummaryWriter()
 transform = transforms.Compose(
     [transforms.Scale(112, interpolation=Image.CUBIC),
      transforms.ToTensor(),
@@ -92,7 +93,7 @@ def eval_model(data_loader):
     # 如果评估模型后需要再次训练，则标记
     # net.train()
 
-
+num_iters = 0
 for epoch in range(epochs):
     # Sets the module in training mode.
     # This has any effect only on modules such as Dropout or BatchNorm.
@@ -120,6 +121,9 @@ for epoch in range(epochs):
         loss = criterion(outputs, target)
         loss.backward()
 
+        num_iters += 1
+        writer.add_scalar('loss', loss.data[0], num_iters)  # data grouping by `slash`
+
         #print(net.group5[0].weight)
         optimizer.step()
 
@@ -138,3 +142,8 @@ for epoch in range(epochs):
                 list(target.data)))
 
     eval_model(test_loader)
+
+# export scalar data to JSON for external processing
+writer.export_scalars_to_json("./all_scalars.json")
+
+writer.close()
