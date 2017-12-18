@@ -17,6 +17,25 @@ from datasets.GestureDataSet import GestureDataSet
 import torch
 
 
+def visualize_uct101_tensor():
+    """对用于训练的ucf101数据集进行可视化
+
+    """
+    transform = transforms.Compose(
+        [transforms.Scale(112, interpolation=Image.CUBIC),
+         transforms.ToTensor(),
+         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+
+    train_data = GestureDataSet(root='/home/zdh/zz/workspace/refactorUCF101', train=False, output_frames_cnt=16,
+                                transform=transform)
+
+    train_loader = torch.utils.data.DataLoader(dataset=train_data, batch_size=1, shuffle=True, num_workers=0)
+
+    for batch_idx, (data, target) in enumerate(train_loader):
+        images = torch.transpose(data[0, ...], 1, 0)  # (L, C, H, W)
+        _imshow(torchvision.utils.make_grid(images), title='uct101-' + str(target[0]))
+
+
 def visualize_skig_tensor():
     """对用于训练的Skig数据集进行可视化
 
@@ -24,16 +43,16 @@ def visualize_skig_tensor():
     transform = transforms.Compose(
         [transforms.Scale(112, interpolation=Image.CUBIC),
          transforms.ToTensor(),
-         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+         transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[1., 1., 1.])])
 
-    train_data = GestureDataSet(root='/home/zdh/zz/workspace/refactorSkig', train=True, output_frames_cnt=32,
+    train_data = GestureDataSet(root='/home/zdh/zz/workspace/refactorSkig', train=False, output_frames_cnt=16,
                                 transform=transform)
 
     train_loader = torch.utils.data.DataLoader(dataset=train_data, batch_size=1, shuffle=True, num_workers=0)
 
     for batch_idx, (data, target) in enumerate(train_loader):
         images = torch.transpose(data[0, ...], 1, 0)  # (L, C, H, W)
-        _imshow(torchvision.utils.make_grid(images), title='skig')
+        _imshow(torchvision.utils.make_grid(images), title='skig-' + str(target[0]))
 
 
 def visualize_isogd_tensor():
@@ -76,9 +95,10 @@ def _imshow(inp, title=None):
     plt.imshow(inp)
     if title is not None:
         plt.title(title)
-    plt.pause(1)  # pause a bit so that plots are updated
+    plt.pause(2)  # pause a bit so that plots are updated
 
 
 if __name__ == '__main__':
     # visualize_isogd_tensor()
-    visualize_skig_tensor()
+    # visualize_skig_tensor()
+    visualize_uct101_tensor()

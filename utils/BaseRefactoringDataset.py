@@ -110,9 +110,12 @@ class BaseDataSet(object):
 
         # 如果解析帧数和实际视频帧数不同，为了保险起见，
         # 将删除该视频所解析的帧画面，并抛出异常以便人工检查
-        if count != self._countVideoFrames(cap):
+        predCount = self._countVideoFrames(cap)
+        if count != predCount:
             shutil.rmtree(outVideoDir)
-            raise ParseVideoException("解析帧数和实际视频帧数不同")
+            # 当异常视频过多时直接删除源视频以免训练出现问题，注意，会删除源文件！
+            os.remove(inVideoPath)
+            raise ParseVideoException("[异常]视频路径： %s, 预测帧数： %s, 实际帧数: %s " % (inVideoPath, predCount, count))
 
     def _countVideoFrames(self, cap):
         """获取视频帧数
