@@ -195,11 +195,12 @@ while 1:
     
     sorted_contours = sorted(contours, key=cv2.contourArea, reverse=True)
 
+
     face_cascade = cv2.CascadeClassifier('lbp.xml')
     sorted_contours = check_face(frame, face_cascade, sorted_contours)
     for ci in range(min(4, len(sorted_contours))):
         drawl_contour(sorted_contours[ci])
-    
+
     ##### Show final image ########
     cv2.imshow('Dilation', frame)
     ###############################
