@@ -139,7 +139,7 @@ class Ui_MainWindow(object):
         self.progressBar_12.setGeometry(QtCore.QRect(580, 320, 81, 21))
         self.progressBar_12.setProperty("value", 24)
         self.progressBar_12.setObjectName("progressBar_12")
-        self.textEdit = QtWidgets.QTextEdit()
+        self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
         self.textEdit.setGeometry(QtCore.QRect(110, 360, 281, 51))
         self.textEdit.setStyleSheet("")
         self.textEdit.setObjectName("textEdit")
@@ -184,7 +184,7 @@ class Ui_MainWindow(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'.SF NS Text\'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" dir=\'rtl\' style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt; color:#0080ff;\">thumb up</span></p></body></html>"))
+"<p align=\"center\" dir=\'rtl\' style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.pushButton.setText(_translate("MainWindow", "Start"))
         self.pushButton_2.setText(_translate("MainWindow", "End"))
 

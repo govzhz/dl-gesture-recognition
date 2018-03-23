@@ -1,4 +1,4 @@
-#!/usr/bin/python
+# !/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import cv2
@@ -12,6 +12,7 @@ import threading
 import queue
 import time
 from concurrent.futures import ThreadPoolExecutor
+import argparse
 
 """
 手势识别客户端Demo，支持27分类
@@ -19,7 +20,7 @@ from concurrent.futures import ThreadPoolExecutor
     交互方式：
               1. 第一次按下 s 键开始，客户端实时向服务器端提交图片
               2. 第二次按下 s 键，客户端向服务器提交分类请求，返回分类结果
-    特点：主要是用于远程服务器，提高响应速度，比较耗流量
+    特点：主要是用于远程服务器，提高响应速度
 """
 
 # 无手势
@@ -63,10 +64,20 @@ labels = {
     "未知分类错误": "未知分类错误"
 }
 
+parser = argparse.ArgumentParser(description='WebCam Network')
+parser.add_argument('-s', '--server-address', default='http://127.0.0.1:5000', type=str,
+                    help='手势识别服务器地址')
+parser.add_argument('-d', '--device', default=0, type=int,
+                    help='摄像头设备号')
 
-class VideoCapture(object):
+# 图片上传大小（约27k）
+UPLOAD_SIZE = (176, 100)
+# 并发上传图片的线程池数
+POOL_SIZE = 5
 
-    def __init__(self, server_address, upload_size=(176, 100), device_index=0, quit_key='q'):
+
+class GestureRec(object):
+    def __init__(self, server_address, upload_size, pool_size, device_index, quit_key='q'):
         self._device_index = device_index  # 设备索引号或者视频
         self._quit = quit_key  # 退出摄像头
         self._server_address = server_address  # 手势识别服务器地址
@@ -74,17 +85,16 @@ class VideoCapture(object):
         self._save = False  # 是否开始保存帧画面
         self._label = None  # 预测标签
         self._pro = None  # 预测准确率
-        self._queue_predict = queue.Queue()  # 保存预测结果
         self._new = True  # 第一次打开系统标志
+        self._queue_predict = queue.Queue()  # 保存预测结果
+        self._pool = ThreadPoolExecutor(max_workers=pool_size)  # 线程池
+
+        print("系统正在初始化...")
+        self._cap_video = cv2.VideoCapture(device_index)  # 摄像头句柄
         self._save_distance = self.get_save_distance()  # 保存帧画面间距
-        self._pool_size = 5  # 线程池大小
-        self._pool = ThreadPoolExecutor(max_workers=self._pool_size)  # 线程池
 
     def get_save_distance(self):
         """计算保存帧画面间距"""
-        print("系统正在初始化...")
-        video = cv2.VideoCapture(self._device_index)
-
         # Number of frames to capture
         num_frames = 120
 
@@ -95,8 +105,8 @@ class VideoCapture(object):
 
         # Grab a few frames
         for i in range(0, num_frames):
-            ret, frame = video.read()
-            #cv2.imwrite(r"E:\df\%06d.jpg" % i, frame)
+            ret, frame = self._cap_video.read()
+            # cv2.imwrite(r"E:\df\%06d.jpg" % i, frame)
 
         # End time
         end = time.time()
@@ -114,13 +124,11 @@ class VideoCapture(object):
 
     # 捕捉视频
     def run(self):
-        cap = cv2.VideoCapture(self._device_index)
-
         frameCount = 0
         saveCount = 0
-        while cap.isOpened():
+        while self._cap_video.isOpened():
             # 获取帧画面, 如果摄像头开启成功
-            ret, frame = cap.read()
+            ret, frame = self._cap_video.read()
             frameCount += 1
 
             # 第一次加载系统提示
@@ -237,7 +245,7 @@ class VideoCapture(object):
 
     def _remove(self):
         """清空服务器图片数据
-        
+
         :return: json字符串
         """
         start_time = time.time()
@@ -247,6 +255,10 @@ class VideoCapture(object):
         else:
             print("Remove failed...[%.4f]" % (time.time() - start_time))
 
+
 if __name__ == "__main__":
-    cap = VideoCapture(server_address="http://39.104.55.189")
+    args = parser.parse_args()
+
+    cap = GestureRec(server_address=args.server_address, upload_size=UPLOAD_SIZE, pool_size=POOL_SIZE,
+                     device_index=args.device)
     cap.run()
