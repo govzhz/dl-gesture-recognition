@@ -2,12 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1549f22f-9269-459c-a3ca-9eaebf139692" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/GestureGUI/GUI/gui.ui" afterPath="$PROJECT_DIR$/GestureGUI/GUI/testprogress/gui.ui" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/GestureGUI/GUI/resource/1.png" afterPath="$PROJECT_DIR$/GestureGUI/GUI/testprogress/1.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/DL-Gesture-Recognition.iml" afterPath="$PROJECT_DIR$/.idea/DL-Gesture-Recognition.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GestureGUI/GUI/WebCam_Network.py" afterPath="$PROJECT_DIR$/GestureGUI/GUI/WebCam_Network.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GestureGUI/GUI/gui.py" afterPath="$PROJECT_DIR$/GestureGUI/GUI/gui.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GestureGUI/GUI/interface.py" afterPath="$PROJECT_DIR$/GestureGUI/GUI/interface.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -48,18 +42,19 @@
       <file leaf-file-name="interface.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GestureGUI/GUI/interface.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="49" column="1" lean-forward="true" selection-start-line="49" selection-start-column="1" selection-end-line="49" selection-end-column="1" />
+            <state relative-caret-position="-4044">
+              <caret line="102" column="0" lean-forward="true" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
                 <element signature="e#472#1433#0" expanded="false" />
                 <element signature="e#1443#2296#0" expanded="false" />
-                <element signature="e#3693#4470#0" expanded="false" />
-                <element signature="e#7140#7813#0" expanded="false" />
-                <element signature="e#7857#8113#0" expanded="false" />
-                <element signature="e#8752#9488#0" expanded="false" />
-                <element signature="e#9521#9867#0" expanded="false" />
-                <element signature="e#9521#9571#1" expanded="false" />
+                <element signature="e#3668#4445#0" expanded="false" />
+                <element signature="e#7212#7885#0" expanded="false" />
+                <element signature="e#7929#8185#0" expanded="false" />
+                <element signature="e#8824#9560#0" expanded="false" />
+                <element signature="e#9593#9939#0" expanded="false" />
+                <element signature="e#9593#9643#1" expanded="false" />
+                <element signature="e#22460#22563#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -154,11 +149,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>pool</find>
-      <find>update</find>
-      <find>changeProcessbar</find>
-      <find>child</find>
-      <find>timer</find>
       <find>_predict</find>
       <find>threading</find>
       <find>_queue</find>
@@ -184,6 +174,11 @@
       <find>thumb</find>
       <find>_new</find>
       <find>changeText</find>
+      <find>closeApp2</find>
+      <find>closeApp</find>
+      <find>changePixmap</find>
+      <find>communicate</find>
+      <find>cStart</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -209,8 +204,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1280" />
-    <option name="height" value="800" />
+    <option name="x" value="-60" />
+    <option name="y" value="23" />
+    <option name="width" value="1456" />
+    <option name="height" value="777" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -255,90 +252,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DL-Gesture-Recognition" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DL-Gesture-Recognition" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GestureGUI" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GUI" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DL-Gesture-Recognition" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DL-Gesture-Recognition" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GestureGUI" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GUI" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testprogress" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DL-Gesture-Recognition" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DL-Gesture-Recognition" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GestureGUI" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GUI" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resource" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DL-Gesture-Recognition" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DL-Gesture-Recognition" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GestureGUI" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GUI" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="paint" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -346,7 +259,6 @@
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="preferences.externalTools" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="FullScreen" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -624,16 +536,16 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <frame x="-60" y="23" width="1456" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36934075" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3240418" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32846716" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19726028" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21021898" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -721,7 +633,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="73" />
+      <option name="time" value="74" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -764,12 +676,13 @@
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#472#1433#0" expanded="false" />
             <element signature="e#1443#2296#0" expanded="false" />
-            <element signature="e#3693#4470#0" expanded="false" />
-            <element signature="e#7140#7813#0" expanded="false" />
-            <element signature="e#7857#8113#0" expanded="false" />
-            <element signature="e#8752#9488#0" expanded="false" />
-            <element signature="e#9521#9867#0" expanded="false" />
-            <element signature="e#9521#9571#1" expanded="false" />
+            <element signature="e#3668#4445#0" expanded="false" />
+            <element signature="e#7212#7885#0" expanded="false" />
+            <element signature="e#7929#8185#0" expanded="false" />
+            <element signature="e#8824#9560#0" expanded="false" />
+            <element signature="e#9593#9939#0" expanded="false" />
+            <element signature="e#9593#9643#1" expanded="false" />
+            <element signature="e#22460#22563#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -826,12 +739,13 @@
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#472#1433#0" expanded="false" />
             <element signature="e#1443#2296#0" expanded="false" />
-            <element signature="e#3693#4470#0" expanded="false" />
-            <element signature="e#7140#7813#0" expanded="false" />
-            <element signature="e#7857#8113#0" expanded="false" />
-            <element signature="e#8752#9488#0" expanded="false" />
-            <element signature="e#9521#9867#0" expanded="false" />
-            <element signature="e#9521#9571#1" expanded="false" />
+            <element signature="e#3668#4445#0" expanded="false" />
+            <element signature="e#7212#7885#0" expanded="false" />
+            <element signature="e#7929#8185#0" expanded="false" />
+            <element signature="e#8824#9560#0" expanded="false" />
+            <element signature="e#9593#9939#0" expanded="false" />
+            <element signature="e#9593#9643#1" expanded="false" />
+            <element signature="e#22460#22563#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -858,12 +772,13 @@
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#472#1433#0" expanded="false" />
             <element signature="e#1443#2296#0" expanded="false" />
-            <element signature="e#3693#4470#0" expanded="false" />
-            <element signature="e#7140#7813#0" expanded="false" />
-            <element signature="e#7857#8113#0" expanded="false" />
-            <element signature="e#8752#9488#0" expanded="false" />
-            <element signature="e#9521#9867#0" expanded="false" />
-            <element signature="e#9521#9571#1" expanded="false" />
+            <element signature="e#3668#4445#0" expanded="false" />
+            <element signature="e#7212#7885#0" expanded="false" />
+            <element signature="e#7929#8185#0" expanded="false" />
+            <element signature="e#8824#9560#0" expanded="false" />
+            <element signature="e#9593#9939#0" expanded="false" />
+            <element signature="e#9593#9643#1" expanded="false" />
+            <element signature="e#22460#22563#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1086,18 +1001,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/GestureGUI/GUI/interface.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="49" column="1" lean-forward="true" selection-start-line="49" selection-start-column="1" selection-end-line="49" selection-end-column="1" />
+        <state relative-caret-position="-4044">
+          <caret line="102" column="0" lean-forward="true" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#472#1433#0" expanded="false" />
             <element signature="e#1443#2296#0" expanded="false" />
-            <element signature="e#3693#4470#0" expanded="false" />
-            <element signature="e#7140#7813#0" expanded="false" />
-            <element signature="e#7857#8113#0" expanded="false" />
-            <element signature="e#8752#9488#0" expanded="false" />
-            <element signature="e#9521#9867#0" expanded="false" />
-            <element signature="e#9521#9571#1" expanded="false" />
+            <element signature="e#3668#4445#0" expanded="false" />
+            <element signature="e#7212#7885#0" expanded="false" />
+            <element signature="e#7929#8185#0" expanded="false" />
+            <element signature="e#8824#9560#0" expanded="false" />
+            <element signature="e#9593#9939#0" expanded="false" />
+            <element signature="e#9593#9643#1" expanded="false" />
+            <element signature="e#22460#22563#0" expanded="false" />
           </folding>
         </state>
       </provider>

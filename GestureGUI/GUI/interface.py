@@ -91,14 +91,16 @@ UPLOAD_SIZE = (176, 100)
 POOL_SIZE = 5
 
 
-class Communicate(QObject):
-    closeApp = pyqtSignal()
-    closeApp2 = pyqtSignal(QTextEdit)
 
 class Thread(QThread):
+
+    #信号初始化
+    startApp = pyqtSignal()
+    closeApp = pyqtSignal()
     changePixmap = pyqtSignal(QPixmap)
     changeProcessbar = pyqtSignal(tuple)
     changeText = pyqtSignal(str)
+
     def __init__(self, server_address, upload_size, pool_size, device_index, quit_key='q'):
         super(Thread, self).__init__()
         self._device_index = device_index  # 设备索引号或者视频
@@ -191,6 +193,8 @@ class Thread(QThread):
 
                 # 显示图像
                 # cv2.imshow('Main', frame)
+
+                #格式转化，将opencv 转qt
                 rgbImage = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 convertToQtFormat = QImage(rgbImage.data, rgbImage.shape[1], rgbImage.shape[0], QImage.Format_RGB888)
                 convertToQtFormat = QPixmap.fromImage(convertToQtFormat)
@@ -204,6 +208,7 @@ class Thread(QThread):
             # 按s开始捕捉，再次按下结束捕捉同时开始预测
             if key == ord('s'):
                 if not self._save:
+                    print("1")
                     # 初始化
                     self._label = None
                     self._pro = None
@@ -213,6 +218,7 @@ class Thread(QThread):
                     threading.Thread(target=self._remove).start()
                 else:
                     self._save = False
+                    print("1")
                     # 预测分类
                     threading.Thread(target=self._predict).start()
 
@@ -295,9 +301,6 @@ class Thread(QThread):
             print("Remove failed...[%.4f]" % (time.time() - start_time))
 
 
-
-
-
 class Ui_MainWindow(QWidget):
 
     def __init__(self):
@@ -308,12 +311,6 @@ class Ui_MainWindow(QWidget):
         args = parser.parse_args()
         self.th = Thread(self,upload_size=UPLOAD_SIZE, pool_size=POOL_SIZE,
                      device_index=args.device)
-        self.graph1 = Communicate()
-        self.font = QFont("Times",16);
-        #self.font.setPointSizeF(10);
-        self.font.setBold(True);
-        #self.font.setPixelSize(10);
-        #print(self.font.pointSize())
         MainWindow.setObjectName("MainWindow")
         MainWindow.setEnabled(True)
         MainWindow.resize(800, 490)
@@ -466,19 +463,15 @@ class Ui_MainWindow(QWidget):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        #连接
+        #信号和槽的连接
         self.th.changePixmap.connect(self.label.setPixmap)
         self.th.changeText.connect(self.textEdit.setText)
-        #self.childTh.changeProcessbar.connect(self.updateProcessBar)
         self.th.changeProcessbar.connect(self.updateProcessBar)
-        self.pushButton.clicked.connect(lambda: self.cStart.closeApp.emit())
-        self.pushButton_2.clicked.connect(lambda: self.cEnd.closeApp.emit())
-        self.cStart = Communicate()
-        self.cStart.closeApp.connect(lambda: self.th.start())
-        self.cEnd = Communicate()
-        self.cEnd.closeApp.connect(lambda: self.th.stop())
+        self.pushButton.clicked.connect(lambda: self.th.startApp.emit())
+        self.pushButton_2.clicked.connect(lambda: self.th.closeApp.emit())
+        self.th.startApp.connect(lambda: self.th.start())
+        self.th.closeApp.connect(lambda: self.th.stop())
 
-        #还有好多个
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -505,56 +498,27 @@ class Ui_MainWindow(QWidget):
                                          "</style></head><body style=\" font-family:\'.SF NS Text\'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
                                          "<p align=\"center\" dir=\'rtl\' style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt; color:#0080ff;\"></span></p></body></html>"))
 
-
+    #改变进度条
     def updateProcessBar(self,val):
         step = 0
         num = val[1]
         classification = val[0]
-        #print(self.font.pointSize())
         while step < num:
             step += 1
             self.progressList[classification].setValue(step)
-            #self.progressList[classification].update(10,20,30,40)
 
-
-
+    #改变文本框
     def setText(self,label):
         self.textEdit.setText(label)
         print(label)
 
-    '''
-        def timerEvent(self, event):
-        print("2")
-        if self.step >= 100:
-            self.timer.stop()
-            return
-        self.step = self.step + 1
-        self.progressBar.setValue(self.step)
-
-    def onStart(self, val):
-        num = val[1]
-        classification = val[0]
-        self.timer.start(100, self)
-        #if self.timer.isActive():
-            #self.timer.stop()
-        #else:
-
-
-    '''
-
-
-    '''def setNumber(self,val,index):
-        i = 0
-        if i < val:
-            i += 1
-            self.progressList[index].setValue(i)
-    '''
 
 
 class MainUiClass(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self,parent = None):
         super(MainUiClass,self).__init__()
         self.setupUi(self)
+
 
 if __name__ == '__main__':
     a = QApplication(sys.argv)
