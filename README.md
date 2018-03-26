@@ -23,10 +23,9 @@ $ pip install requests
 
 ### Manual
 
-<center>
-![](./gif/manual.gif)
-
-</center>
+<p align="center">
+  <img src="./gif/manual.gif" width="500">
+</p>
 
 - server-address: gesture recognition server address
 
@@ -49,10 +48,9 @@ $ python run_frameDifferent -s [server-address] --method [method] --threshold [t
 
 ### Object detection
 
-<center>
-![](./gif/object_detection.gif)
-
-</center>
+<p align="center">
+  <img src="./gif/object_detection.gif" width="500">
+</p>
 
 GPU support is required to run this version, we tested on Ubuntu 16.04 + cuda9.0 + cudnn7.0.5 +  tensorflow1.6. You need to install [tensorflow1.6-gpu](https://www.tensorflow.org/install/) extra and [darkflow](https://github.com/thtrieu/darkflow), You can download darkflow from [here](https://drive.google.com/open?id=1khaq-aWudYW_b4GC7R_tyzWiWL3AzJE9).
 
