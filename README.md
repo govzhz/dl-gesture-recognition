@@ -1,3 +1,5 @@
+## Overview
+
 This project uses front-end separation, and the client has the following three forms of implementation:
 
 - Semi-automatic gesture recognition, which means that the user determines the segmentation of continuous gestures
@@ -11,6 +13,8 @@ This project uses front-end separation, and the client has the following three f
 Python3.6, OpenCV3.4 + opencv_contrib
 
 ```
+$ pip install opencv-python
+$ pip install opencv-contrib-python
 $ pip install pillow
 $ pip install requests
 ```
@@ -19,11 +23,13 @@ $ pip install requests
 
 ### Semi-automatic
 
-- server address: gesture recognition server address
+- server-address: gesture recognition server address
 
 ```
 $ python run_manual.py -s [server-address]
 ```
+
+Interactive mode: press the keyboard `s` key before each action, and press the `s` key again after the action is complete to complete the recognition
 
 ### Frame difference
 
@@ -36,9 +42,11 @@ you can choose the Background Subtraction Methods
 $ python run_frameDifferent -s [server-address] --method [method] --threshold [threshold]
 ```
 
-### Object tracking
+### Object detection
 
-you need to install tensorflow1.6-gpu extra and [darkflow](https://github.com/thtrieu/darkflow), You can download it from [here](https://drive.google.com/open?id=1khaq-aWudYW_b4GC7R_tyzWiWL3AzJE9)
+![](./gif/object_detection.gif)
+
+GPU support is required to run this version, we tested on Ubuntu 16.04 + cuda9.0 + cudnn7.0.5 +  tensorflow1.6. You need to install [tensorflow1.6-gpu](https://www.tensorflow.org/install/) extra and [darkflow](https://github.com/thtrieu/darkflow), You can download darkflow from [here](https://drive.google.com/open?id=1khaq-aWudYW_b4GC7R_tyzWiWL3AzJE9).
 
 ```
 $ pip install tensorflow-gpu
