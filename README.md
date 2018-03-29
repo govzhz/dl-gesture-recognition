@@ -37,6 +37,10 @@ Interactive mode: press the keyboard `s` key before each action, and press the `
 
 ### Frame difference
 
+<p align="center">
+  <img src="./gif/frame_different.gif" width="500">
+</p>
+
 you can choose the Background Subtraction Methods
 
 - method: knn or mog
