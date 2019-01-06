@@ -6,20 +6,38 @@ This project uses front-end separation, and the client has the following three f
 - Dynamic gesture recognition based on frame difference method
 - Dynamic gesture recognition based on object tracking
 
-**Note**: No server code is currently provided.
+The server encapsulates Temporal Relation Networks.
 
-## Dependencies
+## Server
 
-Python3.6, OpenCV3.4 + opencv_contrib
+Test on **Ubuntu16.04 + Python3.6 + cuda9.0 + cudnn7.0.5 + Pytorch0.3.1 + opencv3.4**（[aliyun](https://www.aliyun.com) NVIDIA P100）, make sure you have installed the above environment. 
+
+###Dependencies
 
 ```
-$ pip install opencv-python
-$ pip install opencv-contrib-python
+$ pip install flask
+$ pip install pillow
+$ pip install moviepy
+$ sudo apt-get install ffmpeg
+$ pip install -U scikit-learn
+$ pip install scipy
+$ pip install flask_uploads
+```
+
+and then download the [weight file](https://drive.google.com/open?id=1MV-yk_Rk6onfXrmqvCtcz7GXv13dQtgf) and [configuration file](https://drive.google.com/open?id=1mwoMiqEw0aA692o17PvzPMQh-Hzfq8w_), and place them in the `server/model` folder. Finally, run `server.py`
+
+> `.placeholder` under empty folder can be deleted
+
+## Client
+
+Test on **Ubuntu16.04/Mac OS + Python3.6 + OpenCV3.4 + opencv_contrib**
+
+### Dependencies
+
+```
 $ pip install pillow
 $ pip install requests
 ```
-
-## Usage
 
 ### Manual
 
