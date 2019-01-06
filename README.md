@@ -12,7 +12,7 @@ The server encapsulates Temporal Relation Networks.
 
 Test on **Ubuntu16.04 + Python3.6 + cuda9.0 + cudnn7.0.5 + Pytorch0.3.1 + opencv3.4**（[aliyun](https://www.aliyun.com) NVIDIA P100）, make sure you have installed the above environment. 
 
-###Dependencies
+### Dependencies
 
 ```
 $ pip install flask
