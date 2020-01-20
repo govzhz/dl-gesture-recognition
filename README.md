@@ -24,7 +24,7 @@ $ pip install scipy
 $ pip install flask_uploads
 ```
 
-and then download the [weight file](https://drive.google.com/open?id=1MV-yk_Rk6onfXrmqvCtcz7GXv13dQtgf) and [configuration file](https://drive.google.com/open?id=1mwoMiqEw0aA692o17PvzPMQh-Hzfq8w_), and place them in the `server/model` folder. Finally, run `server.py`
+and then download the [weight file](https://drive.google.com/open?id=16oON6bvVWLgFG0dSG5WH8a95E-adiHpg) and [configuration file](https://drive.google.com/open?id=1Xw4hW_EG10W9pqNzMVCOeodn0Bl34f0W), and place them in the `server/model` folder. Finally, run `server.py`
 
 > `.placeholder` under empty folder can be deleted
 
@@ -86,7 +86,7 @@ $ pip install .
 $ flow --h
 ```
 
-and then download the [weight file](https://drive.google.com/open?id=1pcmIyYp1GcJOHNkzWPrPcg1tkMeCewTx) and [configuration file](https://drive.google.com/open?id=1nfp0LO-quY2LxiQ4zEQRdEVp6q6BzLG9), and place them in the `model` folder and `cfg` folder respectively. Finally, run
+and then download the [weight file](https://drive.google.com/open?id=1Z2y3_ghDFBQqgN9ULudAiG4hcjOKkegH) and [configuration file](https://drive.google.com/open?id=1ygKOGGvLsjC-Dw-CIN9530947z9PpQGJ), and place them in the `model` folder and `cfg` folder respectively. Finally, run
 
 ```
 $ python run_objectDetection.py -s [server-address]
